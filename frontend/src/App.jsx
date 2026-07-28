@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selectedStudent,setSelectedStudent]=useState(null);
   const [message, setMessage] = useState("");
 
   const [student, setStudent] = useState({
@@ -119,7 +120,9 @@ setTimeout(() => {
 
               <tbody>
                 {students.map((item) => (
-                  <tr key={item.id}>
+                  <tr key={item.id}
+                  onClick={() => setSelectedStudent(item)}
+                  >
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
@@ -191,6 +194,25 @@ setTimeout(() => {
           </div>
         </div>
       )}
+      {selectedStudent && (
+  <div className="student-detail-overlay">
+    <div className="student-detail-card">
+      <h2>Student Details</h2>
+
+      <p><strong>ID:</strong> {selectedStudent.id}</p>
+      <p><strong>Name:</strong> {selectedStudent.name}</p>
+      <p><strong>Email:</strong> {selectedStudent.email}</p>
+      <p><strong>Course:</strong> {selectedStudent.course}</p>
+
+      <button
+        type="button"
+        onClick={() => setSelectedStudent(null)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
     </div>
   );
 }

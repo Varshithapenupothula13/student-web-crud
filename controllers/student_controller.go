@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -36,5 +38,27 @@ func AddStudent(c *fiber.Ctx) error {
 func GetStudents(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"students": students,
+	})
+}
+func GetStudentByID(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	studentID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid student ID",
+		})
+	}
+
+	for _, student := range students {
+		if student.ID == studentID {
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"student": student,
+			})
+		}
+	}
+
+	return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+		"message": "Student not found",
 	})
 }

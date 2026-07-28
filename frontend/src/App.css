@@ -306,3 +306,52 @@ html, body, #root {
   font-size: 16px;
   font-weight: 500;
 }
+.student-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.student-detail-card {
+  width: 420px;
+  padding: 35px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #e8d7ff, #d8e8ff);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.student-detail-card h2 {
+  font-size: 30px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 25px;
+}
+
+.student-detail-card p {
+  font-size: 19px;
+  font-weight: 600;
+  color: #111;
+  margin: 15px 0;
+}
+
+.student-detail-card strong {
+  font-weight: 800;
+}
+
+.student-detail-card button {
+  width: 100%;
+  margin-top: 25px;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
