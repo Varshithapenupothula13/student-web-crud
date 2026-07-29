@@ -62,3 +62,37 @@ func GetStudentByID(c *fiber.Ctx) error {
 		"message": "Student not found",
 	})
 }
+func UpdateStudent(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	studentID, err := strconv.Atoi(id)
+	if err != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"message": "Invalid student ID",
+		})
+	}
+
+	for i, student := range students {
+		if student.ID == studentID {
+			var updatedStudent Student
+
+			if err := c.BodyParser(&updatedStudent); err != nil {
+				return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+					"message": "Invalid student data",
+				})
+			}
+
+			updatedStudent.ID = studentID
+			students[i] = updatedStudent
+
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"message": "Student updated successfully",
+				"student": updatedStudent,
+			})
+		}
+	}
+
+	return c.Status(fiber.StatusNotFound).JSON(fiber.Map{
+		"message": "Student not found",
+	})
+}

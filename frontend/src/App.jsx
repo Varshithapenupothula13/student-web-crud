@@ -4,7 +4,8 @@ import "./App.css";
 function App() {
   const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [selectedStudent,setSelectedStudent]=useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [editStudent, setEditStudent] = useState(null);
   const [message, setMessage] = useState("");
 
   const [student, setStudent] = useState({
@@ -58,9 +59,9 @@ function App() {
         await getStudents();
         setMessage("Student added successfully!");
 
-setTimeout(() => {
-  setMessage("");
-}, 3000);
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
       } else {
         alert("Failed to add student");
       }
@@ -80,15 +81,49 @@ setTimeout(() => {
     });
   };
 
+  const handleEditChange = (e) => {
+    setEditStudent({
+      ...editStudent,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/students/${editStudent.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editStudent),
+        }
+      );
+
+      if (response.ok) {
+        await getStudents();
+        setEditStudent(null);
+        setMessage("Student updated successfully!");
+
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+      } else {
+        alert("Failed to update student");
+      }
+    } catch (error) {
+      console.error("Error updating student:", error);
+      alert("Can't connect to backend");
+    }
+  };
+
   return (
     <div className="page">
-      {message && (
-  <div className="success-message">
-    ✓ {message}
-  </div>
-)}
+      {message && <div className="success-message">✓ {message}</div>}
       <div className="students-card">
-
         <div className="students-header">
           <h1>Students List</h1>
 
@@ -110,37 +145,32 @@ setTimeout(() => {
           <div className="table-wrapper">
             <table>
               <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Course</th>
-                </tr>
-              </thead>
+  <tr>
+    <th>ID</th>
+    <th>Student Name</th>
+    <th>Email</th>
+    <th>Course</th>
+  </tr>
+</thead>
 
-              <tbody>
-                {students.map((item) => (
-                  <tr key={item.id}
-                  onClick={() => setSelectedStudent(item)}
-                  >
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>{item.course}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+<tbody>
+  {students.map((item) => (
+    <tr key={item.id} onClick={() => setSelectedStudent(item)}>
+      <td>{item.id}</td>
+      <td>{item.name}</td>
+      <td>{item.email}</td>
+      <td>{item.course}</td>
+    </tr>
+  ))}
+</tbody>
+  </table>
           </div>
         )}
       </div>
 
       {showModal && (
         <div className="modal-overlay" onMouseDown={closeModal}>
-          <div
-            className="modal-card"
-            onMouseDown={(e) => e.stopPropagation()}
-          >
+          <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div>
                 <h2>Add Student</h2>
@@ -194,25 +224,91 @@ setTimeout(() => {
           </div>
         </div>
       )}
+
       {selectedStudent && (
-  <div className="student-detail-overlay">
-    <div className="student-detail-card">
-      <h2>Student Details</h2>
-
-      <p><strong>ID:</strong> {selectedStudent.id}</p>
-      <p><strong>Name:</strong> {selectedStudent.name}</p>
-      <p><strong>Email:</strong> {selectedStudent.email}</p>
-      <p><strong>Course:</strong> {selectedStudent.course}</p>
-
-      <button
-        type="button"
-        onClick={() => setSelectedStudent(null)}
-      >
-        Close
-      </button>
-    </div>
+        <div className="student-detail-overlay">
+          <div className="student-detail-card">
+            <h2>Student Details</h2>
+            <div className="student-info">
+  <div className="detail-row">
+    <strong>ID:</strong>
+    <span>{selectedStudent.id}</span>
   </div>
-)}
+
+  <div className="detail-row">
+    <strong>Name:</strong>
+    <span>{selectedStudent.name}</span>
+  </div>
+
+  <div className="detail-row">
+    <strong>Email:</strong>
+    <span>{selectedStudent.email}</span>
+  </div>
+
+  <div className="detail-row">
+    <strong>Course:</strong>
+    <span>{selectedStudent.course}</span>
+  </div>
+</div>
+            <button
+              type="button"
+              onClick={() => {
+                setEditStudent(selectedStudent);
+                setSelectedStudent(null);
+              }}
+            >
+              Edit
+            </button>
+
+            <button type="button" onClick={() => setSelectedStudent(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {editStudent && (
+        <div className="student-detail-overlay">
+          <div className="student-detail-card">
+            <h2>Edit Student</h2>
+
+            <form onSubmit={handleUpdate}>
+              <label>Student Name</label>
+              <input
+                type="text"
+                name="name"
+                value={editStudent.name}
+                onChange={handleEditChange}
+                required
+              />
+
+              <label>Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={editStudent.email}
+                onChange={handleEditChange}
+                required
+              />
+
+              <label>Course</label>
+              <input
+                type="text"
+                name="course"
+                value={editStudent.course}
+                onChange={handleEditChange}
+                required
+              />
+
+              <button type="submit">Update Student</button>
+
+              <button type="button" onClick={() => setEditStudent(null)}>
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
