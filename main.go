@@ -2,7 +2,7 @@ package main
 
 import (
 	"log"
-
+	"student-web-crud/database"
 	"student-web-crud/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	database.ConnectDB()
+
 	app := fiber.New()
 
 	// Allow React frontend to connect to Go backend

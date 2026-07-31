@@ -1,12 +1,8 @@
 package models
 
 type Student struct {
-	ID     int
-	Name   string
-	Email  string
-	Branch string
+	ID     string `json:"id"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	Course string `json:"course"`
 }
-
-// In-memory array
-var Students = []Student{}
-var NextID = 1

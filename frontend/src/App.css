@@ -405,3 +405,118 @@ html, body, #root {
   color: #111827;
   font-weight: 500;
 }
+.delete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+}
+
+.delete-card input {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  box-sizing: border-box;
+}
+
+.delete-card button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.delete-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+/* Delete Modal */
+
+.delete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-card {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 400px;
+  text-align: center;
+}
+
+.delete-card h2 {
+  color: #dc2626;
+  margin-bottom: 10px;
+}
+
+.delete-card p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.delete-card input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.delete-card input:focus {
+  border-color: #dc2626;
+  outline: none;
+}
+
+.delete-card button {
+  padding: 10px 22px;
+  margin: 5px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+/* Delete button */
+.delete-card button:first-of-type {
+  background: #dc2626;
+  color: white;
+}
+
+/* Delete button disabled */
+.delete-card button:first-of-type:disabled {
+  background: #fca5a5;
+  cursor: not-allowed;
+}
+
+/* Cancel button */
+.delete-card button:last-of-type {
+  background: #6b7280;
+  color: white;
+}
+th:first-child,
+td:first-child {
+  width: 60px;
+  text-align: center;
+}

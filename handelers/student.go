@@ -4,6 +4,8 @@ import (
 	"html/template"
 	"net/http"
 	"student-web-crud/models"
+
+	"github.com/google/uuid"
 )
 
 func AddStudentHandler(w http.ResponseWriter, r *http.Request) {
@@ -20,17 +22,14 @@ func AddStudentHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		name := r.FormValue("name")
 		email := r.FormValue("email")
-		branch := r.FormValue("branch")
+		course := r.FormValue("course")
 
 		newStudent := models.Student{
-			ID:     models.NextID,
+			ID:     uuid.New().String(),
 			Name:   name,
 			Email:  email,
-			Branch: branch,
+			Course: course,
 		}
-
-		models.NextID++
-		models.Students = append(models.Students, newStudent)
 
 		tmpl, _ := template.ParseFiles("templates/success.html")
 		tmpl.Execute(w, newStudent)

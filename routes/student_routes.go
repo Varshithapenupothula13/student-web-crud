@@ -11,4 +11,5 @@ func SetupStudentRoutes(app *fiber.App) {
 	app.Get("/students", controllers.GetStudents)
 	app.Get("/students/:id", controllers.GetStudentByID)
 	app.Put("/students/:id", controllers.UpdateStudent)
+	app.Delete("/students/:id", controllers.DeleteStudent)
 }
