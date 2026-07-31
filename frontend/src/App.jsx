@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import {FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 
 function App() {
   const [students, setStudents] = useState([]);
@@ -204,6 +205,7 @@ function App() {
                   <th>Student Name</th>
                   <th>Email</th>
                   <th>Course</th>
+                  <th>/Actions</th>
                 </tr>
               </thead>
 
@@ -211,12 +213,42 @@ function App() {
                 {students.map((item, index) => (
                   <tr
                     key={item.id}
-                    onClick={() => setSelectedStudent(item)}
                   >
                     <td>{index + 1}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.course}</td>
+                    <td className="action-buttons">
+  <FaInfoCircle
+  className="info-icon"
+  title="View Details"
+  onClick={() => setSelectedStudent(item)}
+/>
+
+<FaEdit
+  className="edit-icon"
+  title="Edit"
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedStudent(null);
+    setEditStudent(item);
+    
+  }}
+/>
+
+<FaTrash
+  className="delete-icon"
+  title="Delete"
+  onClick={(e) => {
+    e.stopPropagation();
+    setSelectedStudent(null);
+    setStudentToDelete(item);
+    setDeleteText("");
+    setShowDeleteModal(true);
+  }}
+/> 
+  
+</td>
                   </tr>
                 ))}
               </tbody>
@@ -304,10 +336,6 @@ function App() {
             <h2>Student Details</h2>
 
             <div className="student-info">
-              <div className="detail-row">
-                <strong>ID:</strong>
-                <span>{selectedStudent.id}</span>
-              </div>
 
               <div className="detail-row">
                 <strong>Name:</strong>
@@ -323,30 +351,8 @@ function App() {
                 <strong>Course:</strong>
                 <span>{selectedStudent.course}</span>
               </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                setEditStudent(selectedStudent);
-                setSelectedStudent(null);
-              }}
-            >
-              Edit
-            </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                setStudentToDelete(selectedStudent);
-                setShowDeleteModal(true);
-                setDeleteText("");
-                setSelectedStudent(null);
-              }}
-            >
-              Delete
-            </button>
-
+            </div>                      
+            
             <button
               type="button"
               onClick={() => setSelectedStudent(null)}

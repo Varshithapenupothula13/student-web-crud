@@ -520,3 +520,35 @@ td:first-child {
   width: 60px;
   text-align: center;
 }
+/* Action Icons */
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.edit-icon {
+  color: #2563eb;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-icon:hover {
+  color: #1d4ed8;
+  transform: scale(1.15);
+}
+
+.delete-icon {
+  color: #dc2626;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.delete-icon:hover {
+  color: #b91c1c;
+  transform: scale(1.15);
+}
