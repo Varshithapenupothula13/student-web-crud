@@ -31,6 +31,17 @@ func ConnectDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	createUserTable := `
+CREATE TABLE IF NOT EXISTS users (
+    id TEXT PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL
+);`
+
+	_, err = DB.Exec(createUserTable)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("Database connected successfully")
 }
