@@ -33,32 +33,43 @@ function Register() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleRegister}>
-        <h1>Register</h1>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Create Account</h1>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <p className="auth-subtitle">
+          Register to access the Student Management System.
+        </p>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <form onSubmit={handleRegister}>
+          <label>Email</label>
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <button type="submit">Register</button>
-      </form>
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Create your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-      <p>
-        Already have an account? <Link to="/">Login</Link>
-      </p>
+          <button type="submit" className="auth-btn">
+            Register
+          </button>
+        </form>
+
+        <div className="auth-links">
+          <span>Already have an account?</span>
+          <Link to="/">Login</Link>
+        </div>
+      </div>
     </div>
   );
 }

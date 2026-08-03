@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const ResetPassword = () => {
-  const [email, setEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
+function ResetPassword() {
+  const navigate = useNavigate();
+
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match!");
+    if (password !== confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
 
@@ -21,69 +23,62 @@ const ResetPassword = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: email,
-          newPassword: newPassword,
+          password,
         }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        toast.success(data.message || "Password reset successful!");
-        setEmail("");
-        setNewPassword("");
-        setConfirmPassword("");
+        toast.success(data.message || "Password reset successfully!");
+        navigate("/");
       } else {
-        toast.error(data.error || "Failed to reset password.");
+        toast.error(data.message || "Failed to reset password.");
       }
     } catch (error) {
-      toast.error("Could not connect to backend server.");
+      toast.error("Could not connect to the backend.");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "50px auto", padding: "20px", border: "1px solid #ccc", borderRadius: "8px" }}>
-      <h2>Reset Password</h2>
-      <form onSubmit={handleResetPassword}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Email Address:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
-          />
-        </div>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Reset Password</h1>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>New Password:</label>
+        <p className="auth-subtitle">
+          Create a new password for your account.
+        </p>
+
+        <form onSubmit={handleResetPassword}>
+          <label>New Password</label>
           <input
             type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
+            placeholder="Enter new password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
           />
-        </div>
 
-        <div style={{ marginBottom: "15px" }}>
-          <label>Confirm New Password:</label>
+          <label>Confirm Password</label>
           <input
             type="password"
+            placeholder="Confirm new password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            style={{ width: "100%", padding: "8px", marginTop: "5px" }}
           />
-        </div>
 
-        <button type="submit" style={{ padding: "10px 20px", cursor: "pointer" }}>
-          Reset Password
-        </button>
-      </form>
+          <button type="submit" className="auth-btn">
+            Reset Password
+          </button>
+        </form>
+
+        <div className="auth-links">
+          <Link to="/">Back to Login</Link>
+        </div>
+      </div>
     </div>
   );
-};
+}
 
 export default ResetPassword;

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "../App.css";
-import {FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
+import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 
-function App() {
+function Dashboard() {
   const [students, setStudents] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [editStudent, setEditStudent] = useState(null);
@@ -172,23 +173,28 @@ function App() {
 
   return (
     <div className="page">
-      {message && (
-        <div className="success-message">
-          ✓ {message}
-        </div>
-      )}
+      {message && <div className="success-message">✓ {message}</div>}
 
       <div className="students-card">
         <div className="students-header">
-          <h1>Students List</h1>
+          <div>
+            <h1>Student Management System</h1>
+            <p className="dashboard-subtitle">Manage all student records easily.</p>
+          </div>
 
-          <button
-            className="plus-button"
-            onClick={() => setShowModal(true)}
-            title="Add Student"
-          >
-            +
-          </button>
+          <div className="header-right">
+            <input
+              type="text"
+              placeholder="Search by name or email"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+
+            <button className="plus-button" onClick={() => setShowModal(true)}>
+              + Add Student
+            </button>
+          </div>
         </div>
 
         {students.length === 0 ? (
@@ -205,52 +211,57 @@ function App() {
                   <th>Student Name</th>
                   <th>Email</th>
                   <th>Course</th>
-                  <th>/Actions</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
               <tbody>
-                {students.map((item, index) => (
-                  <tr
-                    key={item.id}
-                  >
-                    <td>{index + 1}</td>
-                    <td>{item.name}</td>
-                    <td>{item.email}</td>
-                    <td>{item.course}</td>
-                    <td className="action-buttons">
-  <FaInfoCircle
-  className="info-icon"
-  title="View Details"
-  onClick={() => setSelectedStudent(item)}
-/>
+                {students
+                  .filter(
+                    (item) =>
+                      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                      item.email.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                  .map((item, index) => (
+                    <tr key={item.id}>
+                      <td>{index + 1}</td>
+                      <td>{item.name}</td>
+                      <td>{item.email}</td>
+                      <td>{item.course}</td>
 
-<FaEdit
-  className="edit-icon"
-  title="Edit"
-  onClick={(e) => {
-    e.stopPropagation();
-    setSelectedStudent(null);
-    setEditStudent(item);
-    
-  }}
-/>
+                      <td>
+                        <div className="action-buttons">
+                          <FaInfoCircle
+                            className="info-icon"
+                            title="View Details"
+                            onClick={() => setSelectedStudent(item)}
+                          />
 
-<FaTrash
-  className="delete-icon"
-  title="Delete"
-  onClick={(e) => {
-    e.stopPropagation();
-    setSelectedStudent(null);
-    setStudentToDelete(item);
-    setDeleteText("");
-    setShowDeleteModal(true);
-  }}
-/> 
-  
-</td>
-                  </tr>
-                ))}
+                          <FaEdit
+                            className="edit-icon"
+                            title="Edit"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedStudent(null);
+                              setEditStudent(item);
+                            }}
+                          />
+
+                          <FaTrash
+                            className="delete-icon"
+                            title="Delete"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedStudent(null);
+                              setStudentToDelete(item);
+                              setDeleteText("");
+                              setShowDeleteModal(true);
+                            }}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -258,34 +269,22 @@ function App() {
       </div>
 
       {/* ADD STUDENT MODAL */}
-
       {showModal && (
-        <div
-          className="modal-overlay"
-          onMouseDown={closeModal}
-        >
-          <div
-            className="modal-card"
-            onMouseDown={(e) => e.stopPropagation()}
-          >
+        <div className="modal-overlay" onMouseDown={closeModal}>
+          <div className="modal-card" onMouseDown={(e) => e.stopPropagation()}>
             <div className="modal-header">
               <div>
                 <h2>Add Student</h2>
                 <p>Enter the student details below</p>
               </div>
 
-              <button
-                type="button"
-                className="close-button"
-                onClick={closeModal}
-              >
+              <button type="button" className="close-button" onClick={closeModal}>
                 ×
               </button>
             </div>
 
             <form onSubmit={handleSubmit}>
               <label>Student Name</label>
-
               <input
                 type="text"
                 name="name"
@@ -296,7 +295,6 @@ function App() {
               />
 
               <label>Email Address</label>
-
               <input
                 type="email"
                 name="email"
@@ -307,7 +305,6 @@ function App() {
               />
 
               <label>Course</label>
-
               <input
                 type="text"
                 name="course"
@@ -317,10 +314,7 @@ function App() {
                 required
               />
 
-              <button
-                type="submit"
-                className="submit-button"
-              >
+              <button type="submit" className="submit-button">
                 Add Student
               </button>
             </form>
@@ -329,34 +323,25 @@ function App() {
       )}
 
       {/* STUDENT DETAILS */}
-
       {selectedStudent && (
         <div className="student-detail-overlay">
           <div className="student-detail-card">
             <h2>Student Details</h2>
-
             <div className="student-info">
-
               <div className="detail-row">
                 <strong>Name:</strong>
                 <span>{selectedStudent.name}</span>
               </div>
-
               <div className="detail-row">
                 <strong>Email:</strong>
                 <span>{selectedStudent.email}</span>
               </div>
-
               <div className="detail-row">
                 <strong>Course:</strong>
                 <span>{selectedStudent.course}</span>
               </div>
-            </div>                      
-            
-            <button
-              type="button"
-              onClick={() => setSelectedStudent(null)}
-            >
+            </div>
+            <button type="button" onClick={() => setSelectedStudent(null)}>
               Close
             </button>
           </div>
@@ -364,26 +349,21 @@ function App() {
       )}
 
       {/* DELETE CONFIRMATION MODAL */}
-
       {showDeleteModal && (
         <div className="delete-overlay">
           <div className="delete-card">
             <h2>Delete Student</h2>
-
             <p>
-              Deleting this student cannot be undone.
-              Confirm by typing
+              Deleting this student cannot be undone. Confirm by typing
               <strong> delete </strong>
               below.
             </p>
-
             <input
               type="text"
               value={deleteText}
               onChange={(e) => setDeleteText(e.target.value)}
               placeholder="Type delete"
             />
-
             <button
               type="button"
               disabled={deleteText !== "delete"}
@@ -391,7 +371,6 @@ function App() {
             >
               Delete
             </button>
-
             <button
               type="button"
               onClick={() => {
@@ -407,15 +386,12 @@ function App() {
       )}
 
       {/* EDIT STUDENT MODAL */}
-
       {editStudent && (
         <div className="student-detail-overlay">
           <div className="student-detail-card">
             <h2>Edit Student</h2>
-
             <form onSubmit={handleUpdate}>
               <label>Student Name</label>
-
               <input
                 type="text"
                 name="name"
@@ -423,9 +399,7 @@ function App() {
                 onChange={handleEditChange}
                 required
               />
-
               <label>Email Address</label>
-
               <input
                 type="email"
                 name="email"
@@ -433,9 +407,7 @@ function App() {
                 onChange={handleEditChange}
                 required
               />
-
               <label>Course</label>
-
               <input
                 type="text"
                 name="course"
@@ -443,15 +415,8 @@ function App() {
                 onChange={handleEditChange}
                 required
               />
-
-              <button type="submit">
-                Update Student
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setEditStudent(null)}
-              >
+              <button type="submit">Update Student</button>
+              <button type="button" onClick={() => setEditStudent(null)}>
                 Cancel
               </button>
             </form>
@@ -462,4 +427,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dashboard;

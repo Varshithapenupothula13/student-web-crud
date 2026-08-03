@@ -18,7 +18,7 @@ body {
 .page {
   width: 100%;
   min-height: 100vh;
-  padding: 60px 30px;
+  padding: px;
 }
 
 /* Students List Card */
@@ -28,17 +28,17 @@ body {
   max-width: none;
   margin: 0 auto;
   background: #afa6b8;
-  border-radius: 18px;
+  border-radius: 26px;
   padding: 30px;
-  min-height:600px;
+  min-height:calc(100vh - 100px);
   box-shadow: 0 10px 35px rgba(15, 23, 42, 0.12);
 }
 
 .students-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .students-header h1 {
@@ -46,24 +46,21 @@ body {
   color: #3b0764;
 }
 
-/* Plus Button */
-
 .plus-button {
-  width: 46px;
+  width: auto;
   height: 46px;
+  padding: 0 20px;
   border: none;
-  border-radius: 50%;
+  border-radius: 10px;
   background: #7c3aed;
   color: white;
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 1;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(8, 145, 178, 0.25);
-  transition: 0.2s;
+  transition: 0.3s;
 }
 
 .plus-button:hover {
@@ -95,15 +92,16 @@ th {
   border: 1px solid #1d1c1f;
 }
 
+
 td {
-  padding: 15px;
+  padding: 15px 20px;
   text-align: left;
   border: 1px solid #19181a;
   color: #2e1065;
   font-family: Arial, sans-serif;
   font-size: 20px;
   font-weight: 600;
-}
+   }
 
 tbody tr:hover {
   background: #f3e8ff;
@@ -521,17 +519,36 @@ td:first-child {
   text-align: center;
 }
 /* Action Icons */
-
 .action-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 30px !important;
+  width: 100%;
 }
+
+th:last-child,
+td:last-child {
+  width: 180px;
+  min-width: 180px;
+  text-align: center;
+}
+.info-icon {
+  color: #010818;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.info-icon:hover {
+  color: #090f1f;
+  transform: scale(1.15);
+}
+
 
 .edit-icon {
   color: #2563eb;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -543,7 +560,7 @@ td:first-child {
 
 .delete-icon {
   color: #dc2626;
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -551,4 +568,150 @@ td:first-child {
 .delete-icon:hover {
   color: #b91c1c;
   transform: scale(1.15);
+}
+/* ================= AUTH PAGES ================= */
+
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #342768, #282c20, #236e6b);
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 35px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+.auth-card h1 {
+  text-align: center;
+  color: #342768;
+  margin-bottom: 8px;
+  font-size: 32px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  color: #64748b;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.auth-card input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 18px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.auth-card input:focus {
+  border-color: #6d28d9;
+  box-shadow: 0 0 0 3px rgba(109,40,217,.15);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #6d28d9;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.auth-btn:hover {
+  background: #5b21b6;
+}
+
+.auth-links {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.auth-links a {
+  color: #6d28d9;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+.dashboard-subtitle {
+  margin-top: 2px;
+  margin-bottom: 0;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.plus-button {
+  width: auto;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}.search-container {
+  margin: 20px 0;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 350px;
+  padding: 12px 15px;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-input {
+  width: 280px;
+  margin: 0;
+}
+.info-icon,
+.edit-icon,
+.delete-icon {
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+/* Container lo emi ivvakkarledu */
+.action-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Button ki margin ivvandi */
+.action-btn {
+  margin: 0 10px; /* Left and right lo 10px gap vastundi */
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
