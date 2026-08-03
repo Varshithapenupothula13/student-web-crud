@@ -14,11 +14,11 @@ func main() {
 
 	app := fiber.New()
 
-	// Allow React frontend to connect to Go backend
+	// Allow React frontend to connect seamlessly
 	app.Use(cors.New(cors.Config{
-		AllowOrigins: "http://localhost:5173,http://localhost:5174",
+		AllowOrigins: "*",
 		AllowHeaders: "Origin, Content-Type, Accept",
-		AllowMethods: "GET,POST,PUT,DELETE,OPTIONS",
+		AllowMethods: "GET, POST, PUT, DELETE, OPTIONS",
 	}))
 
 	// Test route

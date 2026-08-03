@@ -9,6 +9,8 @@ import (
 func SetupStudentRoutes(app *fiber.App) {
 	app.Post("/register", controllers.RegisterUser)
 	app.Post("/login", controllers.LoginUser)
+	app.Post("/forgot-password", controllers.ForgotPassword)
+	app.Post("/reset-password", controllers.ResetPassword)
 	app.Post("/students", controllers.AddStudent)
 	app.Get("/students", controllers.GetStudents)
 	app.Get("/students/:id", controllers.GetStudentByID)
